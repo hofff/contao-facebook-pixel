@@ -75,10 +75,11 @@ class FacebookPixelPlugin extends \Contao\ContentElement
 	 */
 	protected function compile()
 	{
+        $this->Template->optOutActiveText = $this->fb_pixel_opt_out_active_text ? $this->fb_pixel_opt_out_active_text : $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'];;
+        $this->Template->optOutInActiveText = $this->fb_pixel_opt_out_inactive_text ? $this->fb_pixel_opt_out_inactive_text : $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'];;;
+
         if ($this->Input->Cookie('FB_PIXEL_OPTOUT'))
         {
-            $this->Template->optOutActiveText = $this->fb_pixel_opt_out_active_text;
-            $this->Template->optOutInActiveText = $this->fb_pixel_opt_out_inactive_text;
             $this->Template->optOutStatus = true;
         }
 	}

@@ -3,21 +3,21 @@
 <?php $this->block('content'); ?>
 
 <a href="#" class="hyperlink_txt" title="<?= $this->linkTitle ?>" onclick="checkFacebookCookie();return false;" <?= $this->attribute ?><?= $this->target ?>><?= $this->link ?>
-    <span id="fbOptOutactive"<?php if($this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->fbPixelOptOutActiveText ?></span>
-    <span id="fbOptOutInactive"<?php if(!$this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->fbPixelOptOutInActiveText ?></span>
+    <span id="fbOptOutActive"<?php if($this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->optOutActiveText ?></span>
+    <span id="fbOptOutInActive"<?php if(!$this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->optOutInActiveText ?></span>
 </a>
 <script>
     function checkFacebookCookie() {
         if(readFacebookCookie() == 1)
         {
-            document.getElementById('fbOptOutactive').style.display = "block";
-            document.getElementById('fbOptOutInactive').style.display = "none";
+            document.getElementById('fbOptOutActive').style.display = "block";
+            document.getElementById('fbOptOutInActive').style.display = "none";
             deleteFacebookCookie();
         }
         else
         {
-            document.getElementById('fbOptOutactive').style.display = "none";
-            document.getElementById('fbOptOutInactive').style.display = "block";
+            document.getElementById('fbOptOutActive').style.display = "none";
+            document.getElementById('fbOptOutInActive').style.display = "block";
             setFacebookCookie();
         }
 

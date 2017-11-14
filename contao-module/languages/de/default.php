@@ -4,7 +4,9 @@
 $GLOBALS['TL_LANG']['FMD']['hofff_facebook-pixel-optout'] = array('Facebook Pixel OptOut', 'Facebook Pixel OptOut');
 $GLOBALS['TL_LANG']['CTE']['hofff_facebook-pixel-optout'] = array('Facebook Pixel OptOut', 'Facebook Pixel OptOut');
 
-$GLOBALS['TL_LANG']['tl_page']['facebook_pixel_legend'] = 'Facebook Pixel - Einstellungen';
+$GLOBALS['TL_LANG']['tl_page']['facebook_pixel_legend'] = $GLOBALS['TL_LANG']['tl_content']['facebook_pixel_legend'] =
+    $GLOBALS['TL_LANG']['tl_module']['facebook_pixel_legend'] = 'Facebook Pixel - Einstellungen';
+
 $GLOBALS['TL_LANG']['tl_page']['fb_pixel_id'] = array('Facebook Pixel ID', 'Bitte hier die Facebook Pixel ID eingeben.');
 $GLOBALS['TL_LANG']['tl_page']['fb_pixel_status'] = array('Aktiv?', 'Wenn aktiv, wird der Facebook Pixel auf allen Unterseiten eingebunden.');
 

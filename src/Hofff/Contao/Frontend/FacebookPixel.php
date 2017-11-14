@@ -71,10 +71,11 @@ class FacebookPixel extends \Frontend
                 // parse template file
                 $objTemplate = new \FrontendTemplate('ce_facebook_pixel_optout');
 
+                $objTemplate->optOutActiveText = $arrTag[2] ? $arrTag[2] : $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'];
+                $objTemplate->optOutInActiveText = $arrTag[3] ? $arrTag[3] : $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'];
+
                 if ($this->Input->Cookie('FB_PIXEL_OPTOUT'))
                 {
-                    $objTemplate->optOutActiveText = $arrTag[1] ? $arrTag[1] : $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'];
-                    $objTemplate->optOutInActiveText = $arrTag[2] ? $arrTag[2] : $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'];
                     $objTemplate->optOutStatus = true;
                 }
 
