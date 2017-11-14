@@ -14,6 +14,9 @@ for opt out link
 - use module or
 - use insert tag {{fbPixel::privacyLink}}
 
+set insert tag text like
+{{fbPixel::privacyLink|Hier Cookie setzen Text einfügen|Hier Cookie löschen Text einfügen}}
+
 ## Compatibility
 
 - min. Contao version: >= 3.5.0

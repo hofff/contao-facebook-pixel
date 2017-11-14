@@ -3,8 +3,8 @@
 <?php $this->block('content'); ?>
 
 <a href="#" class="hyperlink_txt" title="<?= $this->linkTitle ?>" onclick="checkFacebookCookie();return false;" <?= $this->attribute ?><?= $this->target ?>><?= $this->link ?>
-    <span id="fbOptOutactive"<?php if($this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'] ?></span>
-    <span id="fbOptOutInactive"<?php if(!$this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'] ?></span>
+    <span id="fbOptOutactive"<?php if($this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->fbPixelOptOutActiveText ?></span>
+    <span id="fbOptOutInactive"<?php if(!$this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->fbPixelOptOutInActiveText ?></span>
 </a>
 <script>
     function checkFacebookCookie() {

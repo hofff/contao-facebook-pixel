@@ -8,6 +8,13 @@ $GLOBALS['TL_LANG']['tl_page']['facebook_pixel_legend'] = 'Facebook Pixel - Sett
 $GLOBALS['TL_LANG']['tl_page']['fb_pixel_id'] = array('Facebook Pixel ID', 'Please add Facebook Pixel ID here.');
 $GLOBALS['TL_LANG']['tl_page']['fb_pixel_status'] = array('Active?', 'If active, Facebook Pixel will be loaded on all subpages.');
 
-// privacy text
-$GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'] = 'Facebook Pixel OptOut Cookie setzen';
-$GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'] = 'Facebook Pixel OptOut Cookie entfernen';
+$GLOBALS['TL_DCA']['tl_content']['fields']['fb_pixel_opt_out_active_text'] = $GLOBALS['TL_LANG']['tl_page']['fb_pixel_opt_out_active_text'] =
+    array('Text für OptOut Cookie setzen', 'Text für OptOut Cookie setzen');
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['fb_pixel_opt_out_inactive_text'] = $GLOBALS['TL_LANG']['tl_page']['fb_pixel_opt_out_inactive_text'] =
+    array('Text für OptOut Cookie löschen', 'Text für OptOut Cookie löschen');
+
+// error messages
+$GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'] = 'Facebook Pixel - Please set link text in insert tag, for example see readme file.';
+$GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'] = 'Facebook Pixel - Please set link text in insert tag, for example see readme file.';
+$GLOBALS['TL_LANG']['MSC']['fbPixelNoIdIsSet'] = 'Facebook Pixel - No ID is set in website root!';

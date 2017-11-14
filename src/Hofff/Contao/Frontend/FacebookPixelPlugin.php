@@ -63,7 +63,7 @@ class FacebookPixelPlugin extends \Contao\ContentElement
 
         // Return if there is no page id
         if (!$this->fb_pixel_id) {
-            return '<div>Facebook Pixel - No ID is set in website root!</div>';
+            return '<div>' . $GLOBALS['TL_LANG']['MSC']['fbPixelNoIdIsSet'] . '</div>';
         }
 
 		return parent::generate();
@@ -77,6 +77,8 @@ class FacebookPixelPlugin extends \Contao\ContentElement
 	{
         if ($this->Input->Cookie('FB_PIXEL_OPTOUT'))
         {
+            $this->Template->optOutActiveText = $this->fb_pixel_opt_out_active_text;
+            $this->Template->optOutInActiveText = $this->fb_pixel_opt_out_inactive_text;
             $this->Template->optOutStatus = true;
         }
 	}
