@@ -15,7 +15,7 @@ for opt out link
 - use insert tag {{fbPixel::privacyLink}}
 
 set insert tag text like
-{{fbPixel::privacyLink|Hier Cookie setzen Text einfügen|Hier Cookie löschen Text einfügen}}
+{{fbPixel::privacyLink::Hier Cookie setzen Text einfügen::Hier Cookie löschen Text einfügen}}
 
 ## Compatibility
 
