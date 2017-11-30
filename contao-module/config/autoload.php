@@ -28,10 +28,10 @@ TemplateLoader::addFiles(array
 
 /**
  * Register the classes
- * /
+ */
 ClassLoader::addClasses(array
 (
     // Classes
     'Hofff\Contao\Frontend\FacebookPixel'   => 'system/modules/hofff_facebook-pixel/FacebookPixel.php',
     'Hofff\Contao\Frontend\FacebookPixelPlugin'   => 'system/modules/hofff_facebook-pixel/FacebookPixelPlugin.php',
-)); */
+));
