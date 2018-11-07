@@ -1,51 +1,9 @@
+<?php $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/hofffcontaofacebookpixel/js/pixel.js|static' ?>
 <?php $this->extend('block_unsearchable'); ?>
 
 <?php $this->block('content'); ?>
-
-<a href="#" class="hyperlink_txt" title="<?= $this->linkTitle ?>" onclick="checkFacebookCookie();return false;" <?= $this->attribute ?><?= $this->target ?>><?= $this->link ?>
-    <span id="fbOptOutActive"<?php if($this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->optOutActiveText ?></span>
-    <span id="fbOptOutInActive"<?php if(!$this->optOutStatus): ?>style="display:none;" <?php endif; ?>><?= $this->optOutInActiveText ?></span>
+<a href="#" class="hyperlink_txt fb-opt-out-link" title="<?= $this->linkTitle ?>" <?= $this->attribute ?><?= $this->target ?>><?= $this->link ?>
+    <span class="fb-opt-out-active"<?php if($this->optOutStatus): ?> style="display:none;" <?php endif; ?>><?= $this->optOutActiveText ?></span>
+    <span class="fb-opt-out-inactive"<?php if(!$this->optOutStatus): ?> style="display:none;" <?php endif; ?>><?= $this->optOutInActiveText ?></span>
 </a>
-<script>
-    function checkFacebookCookie() {
-        if(readFacebookCookie() == 1)
-        {
-            document.getElementById('fbOptOutActive').style.display = "block";
-            document.getElementById('fbOptOutInActive').style.display = "none";
-            deleteFacebookCookie();
-        }
-        else
-        {
-            document.getElementById('fbOptOutActive').style.display = "none";
-            document.getElementById('fbOptOutInActive').style.display = "block";
-            setFacebookCookie();
-        }
-
-        return false;
-    }
-
-    function readFacebookCookie()
-    {
-        var nameEQ = "FB_PIXEL_OPTOUT=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-
-    function setFacebookCookie()
-    {
-        document.cookie = "FB_PIXEL_OPTOUT=1;expires=Thu, 01 Jan 2099 23:59:59 GMT;path=/";
-    }
-
-    function deleteFacebookCookie()
-    {
-        if( readFacebookCookie() ) {
-            document.cookie = "FB_PIXEL_OPTOUT=0;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT";
-        }
-    }
-</script>
 <?php $this->endblock(); ?>
