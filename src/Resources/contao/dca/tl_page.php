@@ -18,6 +18,6 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['fb_pixel_id'] = [
 $GLOBALS['TL_DCA']['tl_page']['fields']['fb_pixel_status'] = [
     'label'     => &$GLOBALS['TL_LANG']['tl_page']['fb_pixel_status'],
     'inputType' => 'checkbox',
-    'eval'      => ['tl_class' => 'w50'],
+    'eval'      => ['tl_class' => 'w50 m12'],
     'sql'       => "char(1) NOT NULL default ''",
 ];
