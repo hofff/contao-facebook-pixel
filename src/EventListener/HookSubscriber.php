@@ -87,7 +87,7 @@ final class HookSubscriber
             return false;
         }
 
-        $template = new FrontendTemplate('ce_facebook_pixel_optout');
+        $template = new FrontendTemplate('ce_hofff_facebook_pixel_optout');
         $template->setData(
             [
                 'optOutActiveText'   => $parts[2] ?: $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'],
@@ -112,7 +112,7 @@ final class HookSubscriber
         $statement = $this->connection->prepare($query);
         $statement->bindValue('pageId', $GLOBALS['objPage']->rootId);
 
-        if (!$statement->execute()) {
+        if (!$statement->execute() || $statement->rowCount() === 0) {
             return [
                 'fb_pixel_id' => null,
                 'fb_pixel_status' => null

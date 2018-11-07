@@ -24,5 +24,5 @@ class FacebookPixelModule extends Module
      *
      * @var string
      */
-    protected $strTemplate = 'mod_facebook_pixel_optout';
+    protected $strTemplate = 'mod_hofff_facebook_pixel_optout';
 }

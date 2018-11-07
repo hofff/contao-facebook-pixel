@@ -24,5 +24,5 @@ class FacebookPixelElement extends ContentElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_facebook_pixel_optout';
+    protected $strTemplate = 'ce_hofff_facebook_pixel_optout';
 }
