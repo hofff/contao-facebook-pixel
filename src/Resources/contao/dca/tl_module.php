@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['hofff_facebook_pixel_optout']
-    = '{title_legend},type'
+    = '{title_legend},name,headline,type'
     . ';{facebook_pixel_legend},fb_pixel_opt_out_active_text,fb_pixel_opt_out_inactive_text'
+    . ';{template_legend:hide},customTpl'
+    . ';{protected_legend:hide},protected'
     . ';{expert_legend:hide},guests,cssID,space'
     . ';{invisible_legend:hide},invisible,start,stop';
 
