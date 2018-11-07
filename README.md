@@ -5,7 +5,8 @@
 
 contao-facebook-pixel is a Contao extension to integrate the Facebook Tracking Pixel.
 
-### settings
+## settings
+
 Set facebook pixel id in root page under facebook pixel settings
 and activate checkbox. The facebook pixel code will be automatically add to template in head section.
 
@@ -19,16 +20,10 @@ set insert tag text like
 
 ## Compatibility
 
-- min. Contao version: >= 3.5.0
-- max. Contao version: 4.4.x
+- min. Contao version: 4.4, < 5.0
+- PHP >= 7.1
 
 
 ## Dependency
 
 There are no dependencies to other extensions, that have to be installed.
-
-
-## Screenshots
-
-![Back end configuration](screenshot-backend.png)
-![Back end configuration](screenshot-frontend.png)
