@@ -1,8 +1,8 @@
 <?php
 
 // label for extenion list in settings and modules
-$GLOBALS['TL_LANG']['FMD']['hofff_facebook-pixel-optout'] = array('Facebook Pixel OptOut', 'Facebook Pixel OptOut');
-$GLOBALS['TL_LANG']['CTE']['hofff_facebook-pixel-optout'] = array('Facebook Pixel OptOut', 'Facebook Pixel OptOut');
+$GLOBALS['TL_LANG']['FMD']['hofff_facebook_pixel_optout'] = array('Facebook Pixel OptOut', 'Facebook Pixel OptOut');
+$GLOBALS['TL_LANG']['CTE']['hofff_facebook_pixel_optout'] = array('Facebook Pixel OptOut', 'Facebook Pixel OptOut');
 
 $GLOBALS['TL_LANG']['tl_page']['facebook_pixel_legend'] = $GLOBALS['TL_LANG']['tl_content']['facebook_pixel_legend'] =
     $GLOBALS['TL_LANG']['tl_module']['facebook_pixel_legend'] = 'Facebook Pixel - Einstellungen';

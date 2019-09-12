@@ -1,0 +1,9 @@
+<?php $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/hofffcontaofacebookpixel/js/pixel.js|static' ?>
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+<a href="#" class="hyperlink_txt fb-opt-out-link" title="<?= $this->linkTitle ?>" <?= $this->attribute ?><?= $this->target ?>><?= $this->link ?>
+    <span class="fb-opt-out-active"<?php if($this->optOutStatus): ?> style="display:none;" <?php endif; ?>><?= $this->optOutActiveText ?></span>
+    <span class="fb-opt-out-inactive"<?php if(!$this->optOutStatus): ?> style="display:none;" <?php endif; ?>><?= $this->optOutInActiveText ?></span>
+</a>
+<?php $this->endblock(); ?>
