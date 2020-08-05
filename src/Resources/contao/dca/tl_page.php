@@ -10,6 +10,12 @@ $GLOBALS['TL_DCA']['tl_page']['palettes']['root'] = str_replace(
     $GLOBALS['TL_DCA']['tl_page']['palettes']['root']
 );
 
+$GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback'] = str_replace(
+    '{publish_legend}',
+    '{facebook_pixel_legend},fb_pixel_id,fb_pixel_status,fb_pixel_consentId;{publish_legend}',
+    $GLOBALS['TL_DCA']['tl_page']['palettes']['root']
+);
+
 $GLOBALS['TL_DCA']['tl_page']['fields']['fb_pixel_id'] = [
     'label'     => &$GLOBALS['TL_LANG']['tl_page']['fb_pixel_id'],
     'inputType' => 'text',
