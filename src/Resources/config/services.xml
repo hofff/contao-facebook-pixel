@@ -7,6 +7,8 @@
     <services>
         <service id="Hofff\Contao\FacebookPixel\EventListener\HookSubscriber" public="true">
             <argument type="service" id="database_connection" />
+            <argument type="service" id="Hofff\Contao\Consent\Bridge\ConsentToolManager" />
+            <argument type="service" id="Hofff\Contao\Consent\Bridge\ConsentId\ConsentIdParser" />
         </service>
     </services>
 </container>

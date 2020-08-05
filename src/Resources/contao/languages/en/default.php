@@ -9,6 +9,7 @@ $GLOBALS['TL_LANG']['tl_page']['facebook_pixel_legend'] = $GLOBALS['TL_LANG']['t
 
 $GLOBALS['TL_LANG']['tl_page']['fb_pixel_id'] = array('Facebook Pixel ID', 'Please add Facebook Pixel ID here.');
 $GLOBALS['TL_LANG']['tl_page']['fb_pixel_status'] = array('Active?', 'If active, Facebook Pixel will be loaded on all subpages.');
+$GLOBALS['TL_LANG']['tl_page']['fb_pixel_consentId'] = array('Consent id', 'Select a consent Id which has to be accepted.');
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fb_pixel_opt_out_active_text'] = $GLOBALS['TL_LANG']['tl_page']['fb_pixel_opt_out_active_text'] =
     array('Text für OptOut Cookie setzen', 'Text für OptOut Cookie setzen');

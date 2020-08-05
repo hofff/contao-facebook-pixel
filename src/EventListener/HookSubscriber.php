@@ -7,6 +7,9 @@ namespace Hofff\Contao\FacebookPixel\EventListener;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Doctrine\DBAL\Connection;
+use Hofff\Contao\Consent\Bridge\ConsentId\ConsentIdParser;
+use Hofff\Contao\Consent\Bridge\ConsentToolManager;
+use Hofff\Contao\Consent\Bridge\Exception\InvalidArgumentException as InvalidConsentIdException;
 
 /**
  * Class FacebookPixel
@@ -27,13 +30,34 @@ final class HookSubscriber
     private $connection;
 
     /**
+     * Consent tool manager.
+     *
+     * @var ConsentToolManager
+     */
+    private $consentToolManager;
+
+    /**
+     * Consent Id parser.
+     *
+     * @var ConsentIdParser
+     */
+    private $consentIdParser;
+
+    /**
      * HookSubscriber constructor.
      *
-     * @param Connection $connection Datase connection.
+     * @param Connection         $connection         Database connection.
+     * @param ConsentToolManager $consentToolManager Consent tool manager.
+     * @param ConsentIdParser    $consentIdParser    Consent Id parser.
      */
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        Connection $connection,
+        ConsentToolManager $consentToolManager,
+        ConsentIdParser $consentIdParser
+    ){
+        $this->connection         = $connection;
+        $this->consentToolManager = $consentToolManager;
+        $this->consentIdParser    = $consentIdParser;
     }
 
     /**
@@ -66,7 +90,10 @@ final class HookSubscriber
             $objTemplate     = new FrontendTemplate('hofff_facebook_pixel');
             $objTemplate->id = $pixelConfig['fb_pixel_id'];
 
-            $GLOBALS['TL_HEAD'][] = $objTemplate->parse();
+            $parsed = $objTemplate->parse();
+            $parsed = $this->applyConsentTool($parsed, $pixelConfig['fb_pixel_consentId']);
+
+            $GLOBALS['TL_HEAD'][] = $parsed;
         }
 
         return $content;
@@ -108,17 +135,37 @@ final class HookSubscriber
      */
     private function getPixelConfig(): array
     {
-        $query     = 'SELECT fb_pixel_id, fb_pixel_status FROM tl_page WHERE id=:pageId';
+        $query     = 'SELECT fb_pixel_id, fb_pixel_status, fb_pixel_consentId FROM tl_page WHERE id=:pageId';
         $statement = $this->connection->prepare($query);
         $statement->bindValue('pageId', $GLOBALS['objPage']->rootId);
 
         if (!$statement->execute() || $statement->rowCount() === 0) {
             return [
                 'fb_pixel_id' => null,
-                'fb_pixel_status' => null
+                'fb_pixel_status' => null,
+                'fb_pixel_consentId' => null
             ];
         }
 
         return $statement->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    private function applyConsentTool(string $buffer, ?string $rawConsentId): string
+    {
+        if (null === $rawConsentId) {
+            return $buffer;
+        }
+
+        $consentTool = $this->consentToolManager->activeConsentTool();
+        if (null === $consentTool) {
+            return $buffer;
+        }
+
+        try {
+            $consentId = $this->consentIdParser->parse($rawConsentId);
+            $buffer    = $consentTool->renderRaw($buffer, $consentId);
+        } catch (InvalidConsentIdException $exception) {}
+
+        return $buffer;
     }
 }
