@@ -11,63 +11,21 @@ use Hofff\Contao\Consent\Bridge\ConsentId\ConsentIdParser;
 use Hofff\Contao\Consent\Bridge\ConsentToolManager;
 use Hofff\Contao\Consent\Bridge\Exception\InvalidArgumentException as InvalidConsentIdException;
 
-/**
- * Class FacebookPixel
- *
- * Front end content element "hofff_facebook-pixel".
- *
- * @copyright  Hofff.com 2017
- * @author     Mathias Arzberger <mathias@hofff.com>
- * @package    Hofff_facebook-pixel
- */
+use function explode;
+
 final class HookSubscriber
 {
-    /**
-     * Database connection.
-     *
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * Consent tool manager.
-     *
-     * @var ConsentToolManager
-     */
-    private $consentToolManager;
-
-    /**
-     * Consent Id parser.
-     *
-     * @var ConsentIdParser
-     */
-    private $consentIdParser;
-
-    /**
-     * HookSubscriber constructor.
-     *
-     * @param Connection         $connection         Database connection.
-     * @param ConsentToolManager $consentToolManager Consent tool manager.
-     * @param ConsentIdParser    $consentIdParser    Consent Id parser.
-     */
     public function __construct(
-        Connection $connection,
-        ConsentToolManager $consentToolManager,
-        ConsentIdParser $consentIdParser
-    ){
-        $this->connection         = $connection;
-        $this->consentToolManager = $consentToolManager;
-        $this->consentIdParser    = $consentIdParser;
+        private readonly Connection $connection,
+        private readonly ConsentToolManager $consentToolManager,
+        private readonly ConsentIdParser $consentIdParser,
+    ) {
     }
 
     /**
      * Add the facebook pixel when parsing a frontend template.
      *
-     * @param string $content
-     *
-     * @return string
-     *
-     * @throws \Doctrine\DBAL\DBALException
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function onParseFrontendTemplate(string $content): string
     {
@@ -87,12 +45,14 @@ final class HookSubscriber
             }
 
             // parse template file
-            $objTemplate     = new FrontendTemplate('hofff_facebook_pixel');
+            $objTemplate = new FrontendTemplate('hofff_facebook_pixel');
+            /** @psalm-suppress InvalidPropertyAssignmentValue */
             $objTemplate->id = $pixelConfig['fb_pixel_id'];
 
             $parsed = $objTemplate->parse();
             $parsed = $this->applyConsentTool($parsed, $pixelConfig['fb_pixel_consentId']);
 
+            /** @psalm-suppress MixedArrayAssignment */
             $GLOBALS['TL_HEAD'][] = $parsed;
         }
 
@@ -102,11 +62,10 @@ final class HookSubscriber
     /**
      * function to add facebook pixel privacy link with an insert tag using switch to add other functions later.
      *
-     * @param string $tag
-     *
-     * @return bool|string
+     * @psalm-suppress MixedArrayAccess
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function onReplaceInsertTag(string $tag)
+    public function onReplaceInsertTag(string $tag): string|false
     {
         $parts = explode('::', $tag);
 
@@ -119,8 +78,8 @@ final class HookSubscriber
             [
                 'optOutActiveText'   => $parts[2] ?: $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutActiveText'],
                 'optOutInActiveText' => $parts[3] ?: $GLOBALS['TL_LANG']['MSC']['fbPixelOptOutInActiveText'],
-                'optOutStatus'       => (bool) Input::cookie('FB_PIXEL_OPTOUT')
-            ]
+                'optOutStatus'       => (bool) Input::cookie('FB_PIXEL_OPTOUT'),
+            ],
         );
 
         return $template->parse();
@@ -129,42 +88,48 @@ final class HookSubscriber
     /**
      * Get the pixel config from the root page.
      *
-     * @return array
+     * @return array<string,string|null>
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @psalm-suppress MixedReturnTypeCoercion
+     * @psalm-suppress InvalidFalsableReturnType
+     * @psalm-suppress FalsableReturnStatement
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function getPixelConfig(): array
     {
         $query     = 'SELECT fb_pixel_id, fb_pixel_status, fb_pixel_consentId FROM tl_page WHERE id=:pageId';
         $statement = $this->connection->prepare($query);
-        $statement->bindValue('pageId', $GLOBALS['objPage']->rootId);
 
-        if (!$statement->execute() || $statement->rowCount() === 0) {
+        /** @psalm-suppress MixedPropertyFetch */
+        $result = $statement->executeQuery(['pageId' => $GLOBALS['objPage']->rootId]);
+        if ($result->rowCount() === 0) {
             return [
-                'fb_pixel_id' => null,
-                'fb_pixel_status' => null,
-                'fb_pixel_consentId' => null
+                'fb_pixel_id'        => null,
+                'fb_pixel_status'    => null,
+                'fb_pixel_consentId' => null,
             ];
         }
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $result->fetchAssociative();
     }
 
-    private function applyConsentTool(string $buffer, ?string $rawConsentId): string
+    private function applyConsentTool(string $buffer, string|null $rawConsentId): string
     {
-        if (null === $rawConsentId) {
+        if ($rawConsentId === null) {
             return $buffer;
         }
 
         $consentTool = $this->consentToolManager->activeConsentTool();
-        if (null === $consentTool) {
+        if ($consentTool === null) {
             return $buffer;
         }
 
         try {
             $consentId = $this->consentIdParser->parse($rawConsentId);
             $buffer    = $consentTool->renderRaw($buffer, $consentId);
-        } catch (InvalidConsentIdException $exception) {}
+        } catch (InvalidConsentIdException) {
+            // Invalid consent id given, ignore it
+        }
 
         return $buffer;
     }

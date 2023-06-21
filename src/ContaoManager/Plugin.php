@@ -12,12 +12,17 @@ use Hofff\Contao\FacebookPixel\HofffContaoFacebookPixelBundle;
 
 final class Plugin implements BundlePluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(HofffContaoFacebookPixelBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class])
-                ->setReplace(['hofff_facebook-pixel'])
+                ->setReplace(['hofff_facebook-pixel']),
         ];
     }
 }

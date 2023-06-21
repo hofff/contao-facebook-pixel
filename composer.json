@@ -1,6 +1,8 @@
 {
   "name": "hofff/contao-facebook-pixel",
   "description": "Integrate Facebook Tracking Pixel in Contao",
+  "license": "LGPL-3.0-or-later",
+  "type": "contao-bundle",
   "keywords": [
     "contao",
     "plugin",
@@ -9,14 +11,11 @@
     "analytics",
     "tracking"
   ],
-  "type": "contao-bundle",
-  "license": "LGPL-3.0-or-later",
-  "homepage": "https://www.hofff.com",
   "authors": [
     {
       "name": "Nicky Hoff",
-      "homepage": "https://www.hofff.com",
       "email": "nick@hofff.com",
+      "homepage": "https://www.hofff.com",
       "role": "Manager"
     },
     {
@@ -26,29 +25,40 @@
       "role": "Developer"
     }
   ],
+  "homepage": "https://www.hofff.com",
   "require": {
-    "php": "^7.1",
+    "php": "^8.1",
     "ext-pdo": "*",
-    "contao/core-bundle": "^4.4",
+    "contao/core-bundle": "^4.9",
+    "doctrine/dbal": "^2.13 || ^3.4",
     "hofff/contao-consent-bridge": "^1.1",
-    "symfony/http-kernel": "^3.3 || ^4.0",
-    "symfony/config": "^3.3 || ^4.0",
-    "symfony/dependency-injection": "^3.3 || ^4.0",
-    "doctrine/dbal": "^2.5"
+    "symfony/config": "^4.4 || ^5.4",
+    "symfony/dependency-injection": "^4.4 || ^5.4",
+    "symfony/http-kernel": "^4.4 || ^5.4"
   },
   "require-dev": {
-    "contao/manager-plugin": "^2.0"
+    "contao/manager-plugin": "^2.0",
+    "doctrine/coding-standard": "^12.0",
+    "phpcq/runner-bootstrap": "^1.0@dev"
   },
   "autoload": {
     "psr-4": {
       "Hofff\\Contao\\FacebookPixel\\": "src/"
     }
   },
-  "extra": {
-    "contao-manager-plugin": "Hofff\\Contao\\FacebookPixel\\ContaoManager\\Plugin",
-    "branch-alias": {
-      "dev-master": "2.1.x-dev",
-      "dev-develop": "2.2.x-dev"
+  "config": {
+    "allow-plugins": {
+      "contao-components/installer": true,
+      "php-http/discovery": true,
+      "contao/manager-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "2.2.x-dev",
+      "dev-master": "2.1.x-dev"
+    },
+    "contao-manager-plugin": "Hofff\\Contao\\FacebookPixel\\ContaoManager\\Plugin"
   }
 }

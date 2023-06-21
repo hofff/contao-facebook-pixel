@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Hofff\Contao\FacebookPixel\EventListener\HookSubscriber;
 use Hofff\Contao\FacebookPixel\Contao\FacebookPixelElement;
+use Hofff\Contao\FacebookPixel\EventListener\HookSubscriber;
 
 /**
  * Content elements
@@ -20,7 +20,7 @@ array_insert(
         'miscellaneous' => [
             'hofff_facebook_pixel_optout' => FacebookPixelElement::class,
         ],
-    ]
+    ],
 );
 
 /*

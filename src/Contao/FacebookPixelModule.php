@@ -7,13 +7,9 @@ namespace Hofff\Contao\FacebookPixel\Contao;
 use Contao\Module;
 
 /**
- * Class ContentRecursiveDownloadFolder
- *
- * Front end content element "hofff_facebook-pixel".
- *
- * @copyright  Hofff.com 2017
- * @author     Mathias Arzberger <mathias@hofff.com>
- * @package    Hofff_facebook-pixel
+ * @property string $fb_pixel_opt_out_active_text
+ * @property string $fb_pixel_opt_out_inactive_text
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class FacebookPixelModule extends Module
 {
@@ -24,5 +20,6 @@ class FacebookPixelModule extends Module
      *
      * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $strTemplate = 'mod_hofff_facebook_pixel_optout';
 }

@@ -2,21 +2,26 @@
 
 declare(strict_types=1);
 
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\CoreBundle\DataContainer\PaletteNotFoundException;
 use Hofff\Contao\Consent\Bridge\EventListener\Dca\ConsentIdOptions;
 
-$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] = str_replace(
-    '{publish_legend}',
-    '{facebook_pixel_legend},fb_pixel_id,fb_pixel_status,fb_pixel_consentId;{publish_legend}',
-    $GLOBALS['TL_DCA']['tl_page']['palettes']['root']
-);
+(static function (): void {
+    $manipulator = PaletteManipulator::create()
+        ->addLegend('facebook_pixel_legend', 'publish_legend', PaletteManipulator::POSITION_BEFORE)
+        ->addFields(
+            ['fb_pixel_id', 'fb_pixel_status', 'fb_pixel_consentId'],
+            'facebook_pixel_legend',
+            PaletteManipulator::POSITION_APPEND,
+        );
 
-if (isset($GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback'])) {
-    $GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback'] = str_replace(
-        '{publish_legend}',
-        '{facebook_pixel_legend},fb_pixel_id,fb_pixel_status,fb_pixel_consentId;{publish_legend}',
-        $GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback']
-    );
-}
+    foreach (['root', 'rootfallback'] as $palette) {
+        try {
+            $manipulator->applyToPalette($palette, 'tl_page');
+        } catch (PaletteNotFoundException) {
+        }
+    }
+})();
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['fb_pixel_id'] = [
     'label'     => &$GLOBALS['TL_LANG']['tl_page']['fb_pixel_id'],

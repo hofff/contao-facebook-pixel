@@ -1,16 +1,9 @@
-# OS
-.DS_Store
-Thumbs.db
-
-# IDEs
-.buildpath
-.project
-.settings/
-.build/
-.idea/
-nbproject/
-
 # Composer
-/vendor/
-composer.phar
+/vendor
 composer.lock
+
+# PHPCQ and related tools
+/.phpcq
+.phpcq.yaml
+.phpcs-cache
+.phpunit.result.cache

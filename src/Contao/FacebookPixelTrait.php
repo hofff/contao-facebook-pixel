@@ -8,42 +8,46 @@ use Contao\BackendTemplate;
 use Contao\Database;
 use Contao\Input;
 
+use function defined;
+
 trait FacebookPixelTrait
 {
+    protected string $fb_pixel_id = '';
+
     /**
-     * Return if there are no files
-     *
-     * @return string
+     * @psalm-suppress MixedPropertyFetch
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if (defined('TL_MODE') && TL_MODE === 'BE') {
             $objTemplate           = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### Facebook Pixel OptOut ###';
             $objTemplate->title    = $this->headline;
             $objTemplate->id       = $this->id;
-            $objTemplate->link     = $this->name;
-            $objTemplate->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->link     = $this->name ?? null;
 
             return $objTemplate->parse();
         }
 
-        $this->fb_pixel_id = Database::getInstance()
-            ->prepare("SELECT * FROM tl_page WHERE id=?")
+        $this->fb_pixel_id = (string) Database::getInstance()
+            ->prepare('SELECT fb_pixel_id FROM tl_page WHERE id=?')
             ->limit(1)
             ->execute($GLOBALS['objPage']->rootId)
             ->fb_pixel_id;
 
         // Return if there is no page id
-        if (!$this->fb_pixel_id) {
-            return '<div>' . $GLOBALS['TL_LANG']['MSC']['fbPixelNoIdIsSet'] . '</div>';
+        if (! $this->fb_pixel_id) {
+            /** @psalm-suppress MixedArrayAccess */
+            return '<div>' . (string) $GLOBALS['TL_LANG']['MSC']['fbPixelNoIdIsSet'] . '</div>';
         }
 
         return parent::generate();
     }
 
     /**
-     * Compile the content element
+     * @psalm-suppress MixedArrayAccess
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     protected function compile(): void
     {
