@@ -9,7 +9,7 @@ use Hofff\Contao\Consent\Bridge\EventListener\Dca\ConsentIdOptions;
 (static function (): void {
     $manipulator = PaletteManipulator::create()
         ->addLegend('facebook_pixel_legend', 'publish_legend', PaletteManipulator::POSITION_BEFORE)
-        ->addFields(
+        ->addField(
             ['fb_pixel_id', 'fb_pixel_status', 'fb_pixel_consentId'],
             'facebook_pixel_legend',
             PaletteManipulator::POSITION_APPEND,
