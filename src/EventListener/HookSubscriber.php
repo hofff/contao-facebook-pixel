@@ -31,7 +31,7 @@ final class HookSubscriber
     {
         static $processed = false;
 
-        if ($processed || ! isset ($GLOBALS['objPage'])) {
+        if ($processed || ! isset($GLOBALS['objPage'])) {
             return $content;
         }
 
