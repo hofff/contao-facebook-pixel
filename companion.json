@@ -1,0 +1,33 @@
+{
+  "receipts": ["projects/contao-bundle/4.13-5.3"],
+  "config": {
+    "phpConstraint": "^8.1"
+  },
+  "tools": {
+    "composer": {
+      "namespace": "Hofff\\Contao\\FacebookPixel"
+    },
+    "psalm": {
+      "configuration": {
+        "errorLevel": "1"
+      }
+    },
+    "phpcq": {
+      "plugins": {
+        "phpunit": false,
+        "rector": false
+      },
+      "presets": {
+        "composer-require-checker": {
+          "tasks": {
+            "composer-require-checker": {
+              "config": {
+                "config_file": ".composer-require-checker.json"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
