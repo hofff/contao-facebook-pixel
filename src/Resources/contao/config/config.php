@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Contao\ArrayUtil;
 use Hofff\Contao\FacebookPixel\Contao\FacebookPixelElement;
 use Hofff\Contao\FacebookPixel\EventListener\HookSubscriber;
 
@@ -13,7 +14,7 @@ $GLOBALS['TL_CTE']['includes']['hofff_facebook_pixel_optout'] = FacebookPixelEle
 /*
  * Front end modules
  */
-array_insert(
+ArrayUtil::arrayInsert(
     $GLOBALS['FE_MOD'],
     2,
     [
