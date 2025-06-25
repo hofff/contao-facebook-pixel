@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Hofff\Contao\FacebookPixel\Contao;
 
 use Contao\BackendTemplate;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Database;
 use Contao\Input;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-use function defined;
+use function assert;
 
 trait FacebookPixelTrait
 {
@@ -20,16 +22,29 @@ trait FacebookPixelTrait
      */
     public function generate(): string
     {
-        if (defined('TL_MODE') && TL_MODE === 'BE') {
+        $requestStack = self::getContainer()->get('request_stack');
+        assert($requestStack instanceof RequestStack);
+        $request      = $requestStack->getCurrentRequest();
+        $scopeMatcher = self::getContainer()->get('contao.routing.scope_matcher');
+        assert($scopeMatcher instanceof ScopeMatcher);
+
+        if ($request && $scopeMatcher->isBackendRequest($request)) {
             $objTemplate           = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### Facebook Pixel OptOut ###';
             $objTemplate->title    = $this->headline;
             $objTemplate->id       = $this->id;
-            $objTemplate->link     = $this->name ?? null;
+
+            /**
+             * @psalm-suppress UndefinedThisPropertyFetch
+             * @psalm-suppress RedundantConditionGivenDocblockType
+             * @psalm-suppress DocblockTypeContradiction
+             */
+            $objTemplate->link = $this->name ?? null;
 
             return $objTemplate->parse();
         }
 
+        /** @psalm-suppress TooManyArguments */
         $this->fb_pixel_id = (string) Database::getInstance()
             ->prepare('SELECT fb_pixel_id FROM tl_page WHERE id=?')
             ->limit(1)
